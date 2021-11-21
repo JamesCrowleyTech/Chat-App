@@ -1,0 +1,130 @@
+html {
+    font-size: 62.5%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+        sans-serif;
+}
+
+body {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+.page-title-container {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    margin-top: 10rem;
+}
+
+.page-title {
+    font-size: 4.3rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+.page-title::after {
+    content: "";
+    position: absolute;
+    background-color: gray;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    width: 100%;
+    height: 3px;
+}
+
+.button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.button--sign-in-google {
+    color: white;
+    font-size: 1.7rem;
+    height: 5rem;
+    background: linear-gradient(to right, #eee, #eee 5rem, blue 5rem, blue 100%);
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+    border-radius: 0.4rem;
+    transition: all 0.3s;
+}
+
+.button--sign-in-google:hover {
+    /* transform: scale(1.01); */
+    box-shadow: 0px 3px 15px 5px rgba(0, 0, 0, 0.1);
+}
+
+.button--sign-in-google img {
+    height: 3rem;
+    width: 3rem;
+    margin-left: 1rem;
+    margin-right: 2rem;
+}
+
+.button--sign-out {
+    color: rgb(0, 110, 255);
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    padding: 1rem;
+    background-color: transparent;
+}
+
+.main-wrapper {
+    position: relative;
+    width: 75%;
+    margin: 3rem 0 7rem 12.5vw;
+}
+
+.channel {
+    width: 75vw;
+    display: inline-block;
+    height: calc(100vh - 26rem);
+    left: 50vw;
+    bottom: 0;
+    overflow-y: scroll;
+}
+
+.channel__form {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
+}
+
+.channel__input {
+    width: 100%;
+    color: white;
+    background-color: #555;
+    outline: none;
+    border: none;
+    border-radius: 1rem;
+    padding: 1rem 1.3rem;
+    font-size: 2rem;
+}
+
+.channel__input::placeholder {
+    color: #999;
+}
+
+.message__top-row {
+    display: flex;
+    align-items: center;
+}
+
+.message__top-row > *:not(:last-child) {
+    /* background-color: crimson; */
+}
