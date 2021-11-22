@@ -5,7 +5,6 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import Button from "./components/Button";
 import Channel from "./components/Channel";
-import Message from "./components/Message";
 import iconGoogle from "./img/icon-google.png";
 
 const firebaseConfig = {
@@ -22,7 +21,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
-const db = firebase.firestore();
 
 // db.collection("messages")
 //     .get()
@@ -35,6 +33,8 @@ const db = firebase.firestore();
 function App() {
     const [user, setUser] = useState(auth.currentUser);
     const [initializing, setInitializing] = useState(true);
+
+    console.log("app rendered");
 
     useEffect(function () {
         const unsubscribe = auth.onAuthStateChanged(function (user) {
@@ -83,7 +83,7 @@ function App() {
 
             {!user && (
                 <div className="sign-in">
-                    <h2>Sign in to chat!</h2>
+                    <h2 className="sign-in__title">Sign in to chat!</h2>
                     <Button onClick={signInWithGoogle} img={iconGoogle} className="button button--sign-in-google">
                         Sign In With Google
                     </Button>
