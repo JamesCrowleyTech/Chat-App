@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -33,22 +33,41 @@ const auth = firebase.auth();
 function App() {
     const [user, setUser] = useState(auth.currentUser);
     const [initializing, setInitializing] = useState(true);
+    const emailRef = useRef("");
+    const passwordRef = useRef("");
 
-    console.log("app rendered");
+    useEffect(
+        function () {
+            const unsubscribe = auth.onAuthStateChanged(function (user) {
+                if (user) {
+                    setUser(user);
+                } else {
+                    setUser(null);
+                }
+            });
 
-    useEffect(function () {
-        const unsubscribe = auth.onAuthStateChanged(function (user) {
-            if (user) {
-                setUser(user);
-            } else {
-                setUser(null);
-            }
-        });
+            if (initializing) setInitializing(false);
 
-        if (initializing) setInitializing(false);
+            return unsubscribe;
+        },
+        [initializing]
+    );
 
-        return unsubscribe;
-    });
+    const signInWithEmailPassword = async function () {
+        // const provider = new firebase.auth.EmailAuthProvider();
+
+        // auth.useDeviceLanguage();
+
+        // try {
+        //     await auth.signInWithPopup(provider);
+        // } catch (err) {
+        //     console.error(err);
+        // }
+
+        try {
+            await auth.createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
+        } catch (err) {}
+    };
 
     const signInWithGoogle = async function () {
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -87,6 +106,38 @@ function App() {
                     <Button onClick={signInWithGoogle} img={iconGoogle} className="button button--sign-in-google">
                         Sign In With Google
                     </Button>
+                    <p className="sign-in-with-email-text">Or Sign In With Email</p>
+                    <form
+                        className="sign-in__form"
+                        onSubmit={function (e) {
+                            e.preventDefault();
+                            signInWithEmailPassword(emailRef, passwordRef);
+                        }}
+                    >
+                        <input
+                            className="sign-in__form-input"
+                            ref={emailRef}
+                            onChange={() => console.log(emailRef.current.value)}
+                            placeholder="Email address"
+                        ></input>
+                        <input
+                            className="sign-in__form-input"
+                            ref={passwordRef}
+                            onChange={() => console.log(passwordRef.current.value)}
+                            placeholder="Password"
+                        ></input>
+                        <button type="submit" className="sign-in__form-button">
+                            Submit!
+                        </button>
+                    </form>
+                    <p type="button" className="create-account">
+                        Don't have an account?{" "}
+                        <span>
+                            <button type="button" className="create-account__btn">
+                                Create One!
+                            </button>
+                        </span>
+                    </p>
                 </div>
             )}
 

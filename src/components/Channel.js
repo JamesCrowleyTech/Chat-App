@@ -51,7 +51,7 @@ export default function Channel({ user = "" }) {
                         .slice(0)
                         .reverse()
                 );
-                causeRerender(rerender + 1);
+                causeRerender((rerender) => rerender + 1);
             });
         return unsub;
     }, []);
