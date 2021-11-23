@@ -33,6 +33,7 @@ const auth = firebase.auth();
 function App() {
     const [user, setUser] = useState(auth.currentUser);
     const [initializing, setInitializing] = useState(true);
+    const [userHasAccount, setUserHasAccount] = useState(true);
     const emailRef = useRef("");
     const passwordRef = useRef("");
 
@@ -53,20 +54,20 @@ function App() {
         [initializing]
     );
 
-    const signInWithEmailPassword = async function () {
-        // const provider = new firebase.auth.EmailAuthProvider();
-
-        // auth.useDeviceLanguage();
-
-        // try {
-        //     await auth.signInWithPopup(provider);
-        // } catch (err) {
-        //     console.error(err);
-        // }
-
+    const createUserWithEmailPassword = async function () {
         try {
-            await auth.createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
-        } catch (err) {}
+            await auth.createUserWithEmailAndPassword(emailRef.current.value);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const signInWithEmailPassword = async function () {
+        try {
+            await auth.signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     const signInWithGoogle = async function () {
@@ -100,46 +101,79 @@ function App() {
                 <h1 className="page-title">Chat App</h1>
             </div>
 
-            {!user && (
-                <div className="sign-in">
-                    <h2 className="sign-in__title">Sign in to chat!</h2>
-                    <Button onClick={signInWithGoogle} img={iconGoogle} className="button button--sign-in-google">
-                        Sign In With Google
-                    </Button>
-                    <p className="sign-in-with-email-text">Or Sign In With Email</p>
-                    <form
-                        className="sign-in__form"
-                        onSubmit={function (e) {
-                            e.preventDefault();
-                            signInWithEmailPassword(emailRef, passwordRef);
-                        }}
-                    >
-                        <input
-                            className="sign-in__form-input"
-                            ref={emailRef}
-                            onChange={() => console.log(emailRef.current.value)}
-                            placeholder="Email address"
-                        ></input>
-                        <input
-                            className="sign-in__form-input"
-                            ref={passwordRef}
-                            onChange={() => console.log(passwordRef.current.value)}
-                            placeholder="Password"
-                        ></input>
-                        <button type="submit" className="sign-in__form-button">
-                            Submit!
-                        </button>
-                    </form>
-                    <p type="button" className="create-account">
-                        Don't have an account?{" "}
-                        <span>
-                            <button type="button" className="create-account__btn">
-                                Create One!
+            {!user &&
+                (userHasAccount ? (
+                    <div className="sign-in">
+                        <h2 className="sign-in__title">Sign in to chat!</h2>
+                        <Button onClick={signInWithGoogle} img={iconGoogle} className="button button--sign-in-google">
+                            Sign In With Google
+                        </Button>
+                        <p className="sign-in-with-email-text">Or Sign In With Email</p>
+                        <form
+                            className="sign-in__form"
+                            onSubmit={function (e) {
+                                e.preventDefault();
+                                signInWithEmailPassword(emailRef, passwordRef);
+                            }}
+                        >
+                            <input
+                                type="email"
+                                className="sign-in__form-input"
+                                ref={emailRef}
+                                onChange={() => console.log(emailRef.current.value)}
+                                placeholder="Email Address"
+                            ></input>
+                            <input
+                                className="sign-in__form-input"
+                                ref={passwordRef}
+                                onChange={() => console.log(passwordRef.current.value)}
+                                placeholder="Password"
+                            ></input>
+                            <button type="submit" className="sign-in__form-button">
+                                Submit!
                             </button>
-                        </span>
-                    </p>
-                </div>
-            )}
+                        </form>
+                        <p className="sign-up-link">
+                            Don't have an account?&nbsp;
+                            <span>
+                                <button
+                                    type="button"
+                                    className="sign-up-link__btn"
+                                    onClick={function () {
+                                        setUserHasAccount(false);
+                                    }}
+                                >
+                                    Create One!
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                ) : (
+                    <div className="sign-up">
+                        <h2 className="sign-up__title">Create An Account!</h2>
+                        <form className="sign-up__form">
+                            <input className="sign-up__form-input" placeholder="Email Address"></input>
+                            <input className="sign-up__form-input" placeholder="Password"></input>
+                            <button type="submit" className="sign-up__form-button">
+                                Submit!
+                            </button>
+                        </form>
+                        <p className="sign-up-link">
+                            Already have an account? &nbsp;
+                            <span>
+                                <button
+                                    type="button"
+                                    className="sign-up-link__btn"
+                                    onClick={function () {
+                                        setUserHasAccount(true);
+                                    }}
+                                >
+                                    Sign In!
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                ))}
 
             {user && <Channel user={user} />}
         </div>
