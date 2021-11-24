@@ -21,6 +21,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
+const db = firebase.firestore();
 
 // db.collection("messages")
 //     .get()
@@ -54,15 +55,15 @@ function App() {
         [initializing]
     );
 
-    const createUserWithEmailPassword = async function () {
+    const createUserEmailPasswordHandler = async function () {
         try {
-            await auth.createUserWithEmailAndPassword(emailRef.current.value);
+            await auth.createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
         } catch (err) {
             console.error(err);
         }
     };
 
-    const signInWithEmailPassword = async function () {
+    const signInEmailPasswordHandler = async function () {
         try {
             await auth.signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
         } catch (err) {
@@ -111,9 +112,9 @@ function App() {
                         <p className="sign-in-with-email-text">Or Sign In With Email</p>
                         <form
                             className="sign-in__form"
-                            onSubmit={function (e) {
+                            onSubmit={(e) => {
                                 e.preventDefault();
-                                signInWithEmailPassword(emailRef, passwordRef);
+                                signInEmailPasswordHandler();
                             }}
                         >
                             <input
@@ -124,10 +125,13 @@ function App() {
                                 placeholder="Email Address"
                             ></input>
                             <input
+                                type="password"
                                 className="sign-in__form-input"
                                 ref={passwordRef}
                                 onChange={() => console.log(passwordRef.current.value)}
                                 placeholder="Password"
+                                minLength="6"
+                                maxLength="24"
                             ></input>
                             <button type="submit" className="sign-in__form-button">
                                 Submit!
@@ -151,15 +155,35 @@ function App() {
                 ) : (
                     <div className="sign-up">
                         <h2 className="sign-up__title">Create An Account!</h2>
-                        <form className="sign-up__form">
-                            <input className="sign-up__form-input" placeholder="Email Address"></input>
-                            <input className="sign-up__form-input" placeholder="Password"></input>
+                        <form
+                            className="sign-up__form"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                createUserEmailPasswordHandler();
+                            }}
+                        >
+                            <input
+                                type="email"
+                                className="sign-up__form-input"
+                                placeholder="Email Address"
+                                ref={emailRef}
+                                required
+                            ></input>
+                            <input
+                                minLength="6"
+                                maxLength="24"
+                                type="password"
+                                className="sign-up__form-input"
+                                placeholder="Password"
+                                required
+                                ref={passwordRef}
+                            ></input>
                             <button type="submit" className="sign-up__form-button">
                                 Submit!
                             </button>
                         </form>
                         <p className="sign-up-link">
-                            Already have an account? &nbsp;
+                            Already have an account?&nbsp;
                             <span>
                                 <button
                                     type="button"
