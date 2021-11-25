@@ -204,4 +204,5 @@ function App() {
     );
 }
 
+export { auth, db };
 export default App;

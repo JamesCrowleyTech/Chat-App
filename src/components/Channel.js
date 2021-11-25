@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import Message from "./Message";
+// import { db } from "../App";
 
 export default function Channel({ user = "" }) {
     const db = firebase.firestore();
@@ -69,7 +70,8 @@ export default function Channel({ user = "" }) {
         <div className="main-wrapper">
             <div className="channel">
                 {messages.map(function (message) {
-                    return <Message {...message} key={message.id} />;
+                    console.log();
+                    return <Message {...message} usersOwnMessage={message.uid === uid} key={message.id} />;
                 })}
             </div>
             <form className="channel__form" onSubmit={handleOnSubmit}>

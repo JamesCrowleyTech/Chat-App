@@ -212,6 +212,13 @@ body {
 .message {
     width: 100%;
     padding: 0.7rem;
+    border-radius: 0.6rem;
+    transition: all 0.1s;
+    position: relative;
+}
+
+.message:hover {
+    background-color: #f7f7f7;
 }
 
 .message__top-row {
@@ -257,6 +264,38 @@ body {
     word-wrap: break-word;
 }
 
+.message__buttons {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.5rem;
+}
+
+.message__button {
+    border-radius: 0.4rem;
+    padding: 0.1rem 0.6rem;
+    font-size: 1.4rem;
+    border: 1px solid #bbb;
+    outline: none;
+    transition: background-color 0.1s;
+}
+
+.message__button:hover {
+    background-color: #dddddd;
+}
+
+.message__button:active {
+    transform: translateY(1px);
+}
+
+.message__edit {
+    margin-right: 0.4rem;
+    color: #444;
+}
+
+.message__delete {
+    color: red;
+}
+
 .sign-up {
     position: absolute;
     top: 50%;
@@ -291,5 +330,5 @@ body {
 
 .sign-up-link {
     text-align: center;
-    margin-top: 0.5rem;
+    margin-top: 1.4rem;
 }
