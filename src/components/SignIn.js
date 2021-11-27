@@ -51,18 +51,11 @@ export default function SignIn() {
                     signInEmailPasswordHandler();
                 }}
             >
-                <input
-                    type="email"
-                    className="sign-in__form-input"
-                    ref={emailRef}
-                    onChange={() => console.log(emailRef.current.value)}
-                    placeholder="Email Address"
-                ></input>
+                <input type="email" className="sign-in__form-input" ref={emailRef} placeholder="Email Address"></input>
                 <input
                     type="password"
                     className="sign-in__form-input"
                     ref={passwordRef}
-                    onChange={() => console.log(passwordRef.current.value)}
                     placeholder="Password"
                     minLength="6"
                     maxLength="24"

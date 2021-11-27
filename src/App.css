@@ -173,17 +173,24 @@ body {
 
 .main-wrapper {
     position: relative;
-    width: 75%;
-    margin: 3rem 0 7rem 12.5vw;
+    width: calc(200px + 40vw);
+    margin: 3rem 0 7rem calc((100vw - (200px + 40vw)) / 2);
 }
 
 .channel {
-    width: 75vw;
+    width: 100%;
     display: inline-block;
-    height: calc(100vh - 26rem);
+    height: calc(100vh - 27rem);
+    margin-top: 1rem;
     left: 50vw;
     bottom: 0;
     overflow-y: scroll;
+}
+
+@media only screen and (max-height: 600px) {
+    .channel {
+        height: calc(100vh - 24rem);
+    }
 }
 
 .channel__form {
@@ -215,6 +222,7 @@ body {
     border-radius: 0.6rem;
     transition: all 0.1s;
     position: relative;
+    min-height: 5.4rem;
 }
 
 .message:hover {
@@ -266,7 +274,7 @@ body {
 
 .message__buttons {
     position: absolute;
-    top: 0.3rem;
+    top: 0.8rem;
     right: 0.5rem;
 }
 
@@ -331,4 +339,18 @@ body {
 .sign-up-link {
     text-align: center;
     margin-top: 1.4rem;
+}
+
+.message__edit-input {
+    position: absolute;
+    left: 5.5rem;
+    top: 3.2rem;
+    width: calc(100% - 5.5rem);
+    color: white;
+    background-color: #555;
+    outline: none;
+    border: none;
+    border-radius: 1rem;
+    padding: 1rem 1.3rem;
+    font-size: 2rem;
 }
