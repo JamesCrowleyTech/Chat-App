@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import firebase from "@firebase/app-compat";
+import React, { useEffect } from "react";
 import { db } from "../App";
 
 export default function Message({
@@ -14,7 +13,6 @@ export default function Message({
 }) {
     const messageDate = new Date(createdAt.seconds * 1000);
     const displayDate = new Intl.DateTimeFormat(navigator.language, { hour: "numeric", minute: "numeric" }).format(messageDate);
-    const editInputRef = useRef("");
 
     const deleteButtonHandler = async function () {
         db.collection("messages")

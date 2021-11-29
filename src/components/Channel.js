@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import firebase from "firebase/compat/app";
 import Message from "./Message";
 import { db } from "../App";
 
 export default function Channel({ user = "" }) {
     const [messages, setMessages] = useState([]);
-    const [_, causeRerender] = useState();
+    const causeRerender = useState()[1];
 
     const [messageBeingEdited, setMessageBeingEdited] = useState(null);
 
@@ -33,8 +32,6 @@ export default function Channel({ user = "" }) {
             name: displayName,
             photoURL,
         });
-
-        // causeRerender();
     };
 
     useEffect(function () {

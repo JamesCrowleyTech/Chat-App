@@ -21,7 +21,8 @@ export default function SignIn() {
         try {
             await auth.signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
         } catch (err) {
-            console.error(err);
+            console.log(err.code);
+            console.error(err.code);
         }
     };
 
