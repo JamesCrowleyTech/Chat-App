@@ -29,6 +29,6 @@ To run on your local server:
 4) You can then use the "edit" and "delete" buttons on your message if you want 
 5) Communicate in real time with users around the world!
 
-This project was built using HTML, CSS, Javascript, and React.js.
+This project was built using HTML, CSS, Javascript, React.js, and Firebase.
 
 I hope you enjoy using this project as much as I enjoyed building it.
