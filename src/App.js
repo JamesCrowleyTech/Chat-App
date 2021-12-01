@@ -61,8 +61,12 @@ function App() {
 
     if (initializing) return <h1>Loading</h1>;
 
+    user && console.log(user.providerData[0].providerId);
+
     return (
         <div className="app">
+            {user && <h2 className="signed-in-as">User: {user.displayName}</h2>}
+
             <Button onClick={signOut} className="button button--sign-out">
                 Sign Out
             </Button>

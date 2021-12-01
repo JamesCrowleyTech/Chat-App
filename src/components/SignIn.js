@@ -9,6 +9,10 @@ export default function SignIn() {
     const emailRef = useRef("");
     const passwordRef = useRef("");
 
+    const createUserWithUsernameAndPassword = async function () {};
+
+    const signInWithUsernameAndPassword = async function () {};
+
     const createUserEmailPasswordHandler = async function () {
         try {
             await auth.createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);

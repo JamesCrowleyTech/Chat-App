@@ -17,7 +17,13 @@ body {
 }
 
 .app {
-    padding-top: 100px;
+    padding-top: 10rem;
+}
+
+@media only screen and (max-height: 800px) {
+    .app {
+        padding-top: 6rem;
+    }
 }
 
 .page-title-container {
@@ -42,6 +48,30 @@ body {
     left: 0;
     width: 100%;
     height: 3px;
+}
+
+.signed-in-as {
+    display: inline-block;
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+    color: #444;
+    font-size: 1.9rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+@media only screen and (max-width: 800px) {
+    .signed-in-as {
+        top: 2.6rem;
+        left: 3rem;
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    .signed-in-as {
+        left: 1rem;
+    }
 }
 
 .button {
@@ -164,11 +194,24 @@ body {
     color: rgb(0, 110, 255);
     position: absolute;
     right: 4rem;
-    top: 4rem;
+    top: 2rem;
     font-size: 2.2rem;
     letter-spacing: 1px;
     padding: 1rem;
     background-color: transparent;
+}
+
+@media only screen and (max-height: 800px) {
+    .button--sign-out {
+        top: 1.5rem;
+        right: 2rem;
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    .button--sign-out {
+        right: 0.7rem;
+    }
 }
 
 .main-wrapper {
@@ -187,9 +230,15 @@ body {
     overflow-y: scroll;
 }
 
+@media only screen and (max-height: 800px) {
+    .channel {
+        height: calc(100vh - 22rem);
+    }
+}
+
 @media only screen and (max-height: 600px) {
     .channel {
-        height: calc(100vh - 24rem);
+        height: calc(100vh - 20.5rem);
     }
 }
 
