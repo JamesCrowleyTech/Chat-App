@@ -43,6 +43,7 @@ export default function SignIn({ emailPasswordDataCollection }) {
     const usernameRef = useRef("");
     const emailRef = useRef("");
     const passwordRef = useRef("");
+    const [displayingErrorMessage, setDisplayingErrorMessage] = useState(false);
 
     const createUserEmailPasswordHandler = async function () {
         try {
@@ -71,7 +72,12 @@ export default function SignIn({ emailPasswordDataCollection }) {
         try {
             await auth.signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
         } catch (err) {
-            console.error(err.code);
+            console.error(err);
+            setTimeout(function () {
+                document.querySelector(".sign-in__error-message").style.transition = "all .6s";
+                setDisplayingErrorMessage(false);
+            }, 4000);
+            setDisplayingErrorMessage(true);
         }
     };
 
@@ -89,6 +95,12 @@ export default function SignIn({ emailPasswordDataCollection }) {
 
     return userHasAccount ? (
         <div className="sign-in">
+            <h2
+                className="sign-in__error-message"
+                style={{ opacity: displayingErrorMessage ? 1 : 0, visibility: displayingErrorMessage ? "visible" : "hidden" }}
+            >
+                Username or password is incorrect.
+            </h2>
             <h2 className="sign-in__title">Sign in to chat!</h2>
             <Button onClick={signInWithGoogle} img={iconGoogle} className="button button--sign-in-google">
                 Sign In With Google
