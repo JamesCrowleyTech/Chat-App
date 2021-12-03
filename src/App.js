@@ -21,6 +21,7 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const emailPasswordDataCollection = db.collection("emailPasswordUserData");
 
 // db.collection("messages")
 //     .get()
@@ -61,20 +62,19 @@ function App() {
 
     if (initializing) return <h1>Loading</h1>;
 
-    user && console.log(user.providerData[0].providerId);
-
     return (
         <div className="app">
-            {user && <h2 className="signed-in-as">User: {user.displayName}</h2>}
+            {user && (
+                <Button onClick={signOut} className="button button--sign-out">
+                    Sign Out
+                </Button>
+            )}
 
-            <Button onClick={signOut} className="button button--sign-out">
-                Sign Out
-            </Button>
             <div className="page-title-container">
                 <h1 className="page-title">Chat App</h1>
             </div>
 
-            {!user && <SignIn></SignIn>}
+            {!user && <SignIn emailPasswordDataCollection={emailPasswordDataCollection}></SignIn>}
 
             {user && <Channel user={user} />}
         </div>

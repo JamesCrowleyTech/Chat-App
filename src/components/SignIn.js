@@ -4,18 +4,64 @@ import firebase from "@firebase/app-compat";
 import Button from "./Button";
 import { auth } from "../App";
 
-export default function SignIn() {
+const randomColor = function () {
+    let chars = "0123456789ABCDEF";
+    let color = "#";
+
+    for (let i = 0; i < 6; i++) {
+        color += chars[Math.floor(Math.random() * 16)];
+    }
+
+    return color;
+};
+
+const makeImageFromInitials = function (sizePx = 256, color, text = "") {
+    if (!text) return;
+
+    if (!color) color = randomColor();
+
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    canvas.width = canvas.height = sizePx;
+
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, sizePx, sizePx);
+
+    context.fillStyle = `${color}50`;
+    context.fillRect(0, 0, sizePx, sizePx);
+
+    context.fillStyle = color;
+    context.textBaseline = "middle";
+    context.textAlign = "center";
+    context.font = `${sizePx / 2}px arial`;
+    context.fillText(text, sizePx / 2, sizePx / 2);
+    return canvas.toDataURL();
+};
+
+export default function SignIn({ emailPasswordDataCollection }) {
     const [userHasAccount, setUserHasAccount] = useState(true);
+    const usernameRef = useRef("");
     const emailRef = useRef("");
     const passwordRef = useRef("");
 
-    const createUserWithUsernameAndPassword = async function () {};
-
-    const signInWithUsernameAndPassword = async function () {};
-
     const createUserEmailPasswordHandler = async function () {
         try {
+            const username = usernameRef.current.value;
             await auth.createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
+
+            const user = auth.currentUser;
+
+            const initials = username
+                .split(" ")
+                .map((n) => n[0].toUpperCase())
+                .join("");
+
+            const photoURL = makeImageFromInitials(256, "", initials);
+
+            emailPasswordDataCollection.doc(`user-${user.uid}`).set({
+                displayName: username,
+                photoURL: photoURL,
+            });
         } catch (err) {
             console.error(err);
         }
@@ -25,7 +71,6 @@ export default function SignIn() {
         try {
             await auth.signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
         } catch (err) {
-            console.log(err.code);
             console.error(err.code);
         }
     };
@@ -94,6 +139,15 @@ export default function SignIn() {
                     createUserEmailPasswordHandler();
                 }}
             >
+                <input
+                    type="text"
+                    className="sign-in__form-input"
+                    ref={usernameRef}
+                    placeholder="Username"
+                    minLength="4"
+                    maxLength="20"
+                    required
+                ></input>
                 <input type="email" className="sign-up__form-input" placeholder="Email Address" ref={emailRef} required></input>
                 <input
                     minLength="6"

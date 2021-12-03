@@ -4,13 +4,33 @@ import { db } from "../App";
 
 export default function Channel({ user = "" }) {
     const [messages, setMessages] = useState([]);
+    const [photoURL, setPhotoURL] = useState(null);
+    const [displayName, setDisplayName] = useState(null);
     const causeRerender = useState()[1];
-
     const [messageBeingEdited, setMessageBeingEdited] = useState(null);
 
+    const providerId = user.providerData[0].providerId;
     const messagesCollection = db.collection("messages");
+    const emailPasswordDataCollection = db.collection("emailPasswordUserData");
 
-    const { uid, displayName, photoURL } = user;
+    const { uid } = user;
+
+    useEffect(function () {
+        if (providerId !== "password") {
+            setPhotoURL(user.photoURL);
+            setDisplayName(user.displayName);
+        }
+        if (providerId === "password") {
+            emailPasswordDataCollection
+                .doc(`user-${uid}`)
+                .get()
+                .then((doc) => doc.data())
+                .then(function (data) {
+                    setPhotoURL(data.photoURL);
+                    setDisplayName(data.displayName);
+                });
+        }
+    }, []);
 
     const handleOnSubmit = function (e) {
         e.preventDefault();
@@ -97,6 +117,7 @@ export default function Channel({ user = "" }) {
 
     return (
         <div className="main-wrapper">
+            {user && <h2 className="signed-in-as">User: {displayName}</h2>}
             <div className="channel">
                 {messages.map(function (message) {
                     return (
