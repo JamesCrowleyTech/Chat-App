@@ -52,7 +52,7 @@ body {
 
 .signed-in-as {
     display: inline-block;
-    position: fixed;
+    position: absolute;
     top: 4rem;
     left: 4rem;
     color: #444;

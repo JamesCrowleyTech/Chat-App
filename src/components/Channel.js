@@ -116,24 +116,26 @@ export default function Channel({ user = "" }) {
     });
 
     return (
-        <div className="main-wrapper">
+        <>
             {user && <h2 className="signed-in-as">User: {displayName}</h2>}
-            <div className="channel">
-                {messages.map(function (message) {
-                    return (
-                        <Message
-                            {...message}
-                            currentlyBeingEdited={messageBeingEdited === `message--${message.id}`}
-                            setMessageBeingEdited={setMessageBeingEdited}
-                            usersOwnMessage={message.uid === uid}
-                            key={message.id}
-                        />
-                    );
-                })}
+            <div className="main-wrapper">
+                <div className="channel">
+                    {messages.map(function (message) {
+                        return (
+                            <Message
+                                {...message}
+                                currentlyBeingEdited={messageBeingEdited === `message--${message.id}`}
+                                setMessageBeingEdited={setMessageBeingEdited}
+                                usersOwnMessage={message.uid === uid}
+                                key={message.id}
+                            />
+                        );
+                    })}
+                </div>
+                <form className="channel__form" onSubmit={handleOnSubmit}>
+                    <input className="channel__input" placeholder="Your messages will be publicly visible"></input>
+                </form>
             </div>
-            <form className="channel__form" onSubmit={handleOnSubmit}>
-                <input className="channel__input" placeholder="Your messages will be publicly visible"></input>
-            </form>
-        </div>
+        </>
     );
 }

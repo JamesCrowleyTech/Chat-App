@@ -23,14 +23,6 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const emailPasswordDataCollection = db.collection("emailPasswordUserData");
 
-// db.collection("messages")
-//     .get()
-//     .then((querySnapshot) => {
-//         querySnapshot.docs.forEach((snapshot) => {
-//             snapshot.ref.delete();
-//         });
-//     });
-
 function App() {
     const [user, setUser] = useState(auth.currentUser);
     const [initializing, setInitializing] = useState(true);
