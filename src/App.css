@@ -71,6 +71,7 @@ body {
 @media only screen and (max-width: 440px) {
     .signed-in-as {
         left: 1rem;
+        font-size: 1.7rem;
     }
 }
 
@@ -228,7 +229,7 @@ body {
 
 .main-wrapper {
     position: relative;
-    width: calc(200px + 40vw);
+    width: calc(200px + 39vw);
     margin: 3rem 0 7rem calc((100vw - (200px + 40vw)) / 2);
 }
 
@@ -305,6 +306,12 @@ body {
     margin-right: 1rem;
 }
 
+@media only screen and (max-width: 420px) {
+    .message__image-container {
+        margin-right: 0.4rem;
+    }
+}
+
 .message__image {
     object-fit: cover;
     height: 100%;
@@ -367,6 +374,7 @@ body {
     }
     .message__username {
         margin-right: 0.1rem;
+        font-size: 1.6rem;
     }
 }
 
